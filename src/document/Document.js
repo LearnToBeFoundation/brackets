@@ -35,7 +35,9 @@ define(function (require, exports, module) {
         PerfUtils           = require("utils/PerfUtils"),
         LanguageManager     = require("language/LanguageManager"),
         CodeMirror          = require("thirdparty/CodeMirror/lib/codemirror"),
-        _                   = require("thirdparty/lodash");
+        _                   = require("thirdparty/lodash"),
+        Collaborator        = require("utils/Collaborator"),
+        PusherPubSub        = require("utils/PusherPubSub");
 
     /**
      * Model for the contents of a single file and its current modification state.
@@ -79,6 +81,9 @@ define(function (require, exports, module) {
         this.file = file;
         this._updateLanguage();
         this.refreshText(rawText, initialTimestamp, true);
+
+        var collab = new Collaborator(new PusherPubSub());
+        collab.makeDocumentCollaborative(this);
     }
 
     EventDispatcher.makeEventDispatcher(Document.prototype);

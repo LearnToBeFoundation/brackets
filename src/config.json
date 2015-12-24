@@ -68,6 +68,7 @@
         "jshint": "2.1.4",
         "load-grunt-tasks": "0.2.0",
         "phantomjs": "1.9.13",
+        "pusher-js": "3.0.0",
         "q": "0.9.2",
         "semver": "^4.1.0",
         "xmldoc": "^0.1.2",

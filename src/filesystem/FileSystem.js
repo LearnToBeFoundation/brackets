@@ -97,7 +97,9 @@ define(function (require, exports, module) {
         FileIndex       = require("filesystem/FileIndex"),
         FileSystemError = require("filesystem/FileSystemError"),
         WatchedRoot     = require("filesystem/WatchedRoot"),
-        EventDispatcher = require("utils/EventDispatcher");
+        EventDispatcher = require("utils/EventDispatcher"),
+        Collaborator    = require("utils/Collaborator"),
+        PusherPubSub    = require("utils/PusherPubSub");
 
     /**
      * The FileSystem is not usable until init() signals its callback.
@@ -115,6 +117,9 @@ define(function (require, exports, module) {
 
         // Initialize the queue of pending external changes
         this._externalChanges = [];
+        console.log("Attempting to print out included libraries");
+        console.log(Collaborator);
+        console.log(PusherPubSub);
     }
     EventDispatcher.makeEventDispatcher(FileSystem.prototype);
 
@@ -384,6 +389,9 @@ define(function (require, exports, module) {
 
         this._impl = impl;
         this._impl.initWatchers(changeCallback, offlineCallback);
+
+        var collab = new Collaborator(new PusherPubSub());
+        collab.makeFileSystemCollaborative(this);
     };
 
     /**
